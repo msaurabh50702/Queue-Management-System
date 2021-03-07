@@ -3,6 +3,9 @@ const express = require("express")
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts');
+const fs = require('fs');
+
+let shop = require("./details.json")
 
 require('dotenv').config()
 
@@ -26,10 +29,14 @@ app.use(cookieParser())
 // Route
 
 app.get("/",(req,res)=>{
-    res.render("index",{title:"Index"})
+    res.render("index",{title:"Index",shop_details:shop})
 })
 
 //Initialize Server 
 app.listen(process.env.PORT,()=>{
     console.log("Server is Running...!");
+    /*fs.readFile("details.json",async (err,data)=>{
+        shop = await JSON.parse(data)
+        console.log(shop)
+    });*/
 })
