@@ -1,1 +1,46 @@
-<h1>Page Rendered</h1>
+<div class="card blue darken-2" style="max-width: 600px;margin: auto;margin-top: 50px;" >
+    <div class="card-content white-text">
+        <div class="row">
+            <div class="col s10 m10 l10">
+                <p style="text-align: center;font-weight: bold;font-size: 15pt;">Queue Management System</p>
+            </div>
+            <div class="col s2 m2 l2">
+                <p class="right">
+                    <label>
+                      <input class="with-gap" name="type" type="radio"  />
+                      <span class="white-text">Shop</span>
+                    </label>
+                    <label>
+                        <input class="with-gap" name="type" type="radio"  />
+                        <span class="white-text">Queue</span>
+                    </label>
+                  </p>
+            </div>
+        </div>
+    </div>
+    <div class="card-tabs">
+      <ul class="tabs tabs-fixed-width tabs-transparent">
+        <li class="tab"><a class="active" href="#login">Login</a></li>
+        <li class="tab"><a  href="#reg">Add New</a></li>
+      </ul>
+    </div>
+    <div class="card-content blue lighten-5">
+      <div id="login">
+          <!-- Login Tab -->
+          login
+      </div>
+      <div id="reg">
+          <!-- Registration Tab -->
+          Register
+      </div>
+    </div>
+  </div>
+
+  <script>
+        //<!-- Initialise Cards -->
+        $(document).ready(function(){
+            let opt = {swipeable:true}
+            $('.tabs').tabs();
+        });
+  </script>
+

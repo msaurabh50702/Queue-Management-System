@@ -1,86 +1,120 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%- title %></title>
+
+<head>
+    <title>
+        <%- title %>
+    </title>
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
 
     <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="QR/jquery.qrcode.js"></script>
-    
-  </head>
 
-  <body>
+</head>
+
+<body>
     <!-- Vertical Navigation Bar -->
     <ul id="slide-out" class="sidenav">
-        <li><div class="user-view">
-          <div class="background">
-            <img src="<%- shop_details.bg_img_url %>">
-          </div>
-          <a href="#user"><img class="circle" src="images/yuna.jpg" onerror=this.src="img/user-male.png"></a>
-          <a href="#name"><span class="white-text name">John Doe</span></a>
-          <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
-        </div></li>
+        <li>
+            <div class="user-view">
+                <div class="background">
+                    <img src="<%- shop_details.bg_img_url %>">
+                </div>
+                <a href="#user"><img class="circle" src="images/yuna.jpg" onerror=this.src="img/user-male.png"></a>
+                <a href="#name"><span class="white-text name">John Doe</span></a>
+                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+            </div>
+        </li>
         <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
         <li><a href="#!">Second Link</a></li>
-        <li><div class="divider"></div></li>
+        <li>
+            <div class="divider"></div>
+        </li>
         <li><a class="subheader">Subheader</a></li>
         <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-        <li><div class="divider"></div></li>
-        <li><a href="#modal1" class="modal-trigger"><i class="material-icons left">qr_code</i></a></li>
+        <li>
+            <div class="divider"></div>
+        </li>
+        <li><a class="subheader">QR Code</a></li>
+        <li><a href="#modal1" class="modal-trigger"><i class="material-icons left">qr_code</i>Show QR</a></li>
 
     </ul>
-    <!-- Vertical Navigation Bar --> 
+    <!-- Vertical Navigation Bar -->
     <!-- QR Code Model -->
     <!-- Modal Structure -->
     <div id="modal1" class="modal" style="width: 300px">
         <center>
             <div class="modal-content">
                 <h4>QR Code</h4>
-                <img class="responsive-img" id="qrcode"><hr>
+                <img class="responsive-img" id="qrcode">
+                <hr>
                 <a id="uri1"></a>
             </div>
             <div class="modal-footer">
-                <a  class="modal-close waves-effect waves-green btn-flat">Close</a>
+                <a class="modal-close waves-effect waves-green btn-flat">Close</a>
             </div>
         </center>
     </div>
     <!-- Horizontal Navigation Bar -->
     <nav>
-        <div class="nav-wrapper">
-          <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-          <a href="#" class="brand-logo" style="font-size: 150%;"><%- shop_details.name %></a>
-          <ul class="right hide-on-med-and-down">
-            <li><a href="#modal1" class="modal-trigger"><i class="material-icons left">qr_code</i></a></li>
-            <li data-target="slide-out" class="sidenav-trigger"><a href="#"><i class="material-icons right">view_module</i>Menu</a></li>
-          </ul>
+        <div class="nav-wrapper blue">
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <a href="#" class="brand-logo" style="font-size: 150%;">
+                <%- shop_details.name %>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#modal1" class="modal-trigger"><i class="material-icons left">qr_code</i></a></li>
+                <li data-target="slide-out" class="sidenav-trigger"><a href="#"><i
+                            class="material-icons right">view_module</i>Menu</a></li>
+            </ul>
         </div>
     </nav>
-    <!-- Horizontal Navigation Bar End-->      
-    
+    <!-- Horizontal Navigation Bar End-->
+
     <%- body %>
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            $('.sidenav').sidenav();
-        });
-        $(document).ready(function(){
-            $('.modal').modal();
-        });
-    </script>
-    <script>
-        let finalURL = 'https://chart.googleapis.com/chart?cht=qr&chl=http://' + 
-          location.hostname + 
-          ':8080&chs=160x160&chld=L|0'
-        let uri = "http://"+location.hostname+":8080"
-        $('#qrcode').attr('src', finalURL);
-        $('#uri1').attr('src', uri).html(uri);
-    </script>
-  </body>
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('.sidenav').sidenav();
+            });
+            $(document).ready(function () {
+                $('.modal').modal();
+            });
+        </script>
+        <script>
+            let finalURL = 'https://chart.googleapis.com/chart?cht=qr&chl=http://' +
+                location.hostname +
+                ':8080&chs=160x160&chld=L|0'
+            let uri = "http://" + location.hostname + ":8080"
+            $('#qrcode').attr('src', finalURL);
+            $('#uri1').attr('src', uri).html(uri);
+        </script>
+          <script>
+              function readCookie(name) {
+                    var nameEQ = name + "=";
+                    var ca = document.cookie.split(';');
+                    for(var i=0;i < ca.length;i++) {
+                        var c = ca[i];
+                        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                    }
+                    return null;
+                }
+            $(document).ready(function () {
+                var theClassList = document.querySelectorAll(".blue");
+                console.log(theClassList)
+                for (var i = 0; i < theClassList.length; i++) {
+                    (theClassList[i].classList).replace('blue', readCookie("theme"))
+                }
+            });
+        </script>
+</body>
+
 </html>

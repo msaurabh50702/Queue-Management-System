@@ -18,6 +18,7 @@ app.use(expressLayouts);
 app.set("views","./views")
 
 app.use(express.static('public'));
+app.use(cookieParser());
 
 
 app.use(bodyParser.json());
@@ -29,6 +30,7 @@ app.use(cookieParser())
 // Route
 
 app.get("/",(req,res)=>{
+    res.cookie('theme', shop.theme)
     res.render("index",{title:"Index",shop_details:shop})
 })
 
