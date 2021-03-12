@@ -1,17 +1,17 @@
-<div class="card blue darken-2" style="max-width: 600px;margin: auto;margin-top: 50px;" >
+<div class="card blue darken-2"  style="max-width: 600px;margin: auto;margin-top: 50px;" >
     <div class="card-content white-text">
         <div class="row">
-            <div class="col s10 m10 l10">
+            <div class="col s9 m9 l9">
                 <p style="text-align: center;font-weight: bold;font-size: 15pt;">Queue Management System</p>
             </div>
-            <div class="col s2 m2 l2">
-                <p class="right">
+            <div class="col s3 m3 l3">
+                <p class="left">
                     <label>
-                      <input class="with-gap" name="type" type="radio"  />
-                      <span class="white-text">Shop</span>
+                      <input class="with-gap validate" required name="type" type="radio" onchange="t_name('Shop')" />
+                      <span class="white-text">Shop   </span>
                     </label>
                     <label>
-                        <input class="with-gap" name="type" type="radio"  />
+                        <input class="with-gap validate" required name="type" type="radio"  onchange="t_name('Queue')"/>
                         <span class="white-text">Queue</span>
                     </label>
                   </p>
@@ -20,27 +20,101 @@
     </div>
     <div class="card-tabs">
       <ul class="tabs tabs-fixed-width tabs-transparent">
-        <li class="tab"><a class="active" href="#login">Login</a></li>
-        <li class="tab"><a  href="#reg">Add New</a></li>
+        <li class="tab"><a class="active" href="#login">Login To <span id="lgn"></span></a></li>
+        <li class="tab"><a  href="#reg">Add New <span id="name"></span></a></li>
       </ul>
     </div>
     <div class="card-content blue lighten-5">
       <div id="login">
           <!-- Login Tab -->
-          login
+            <form class="col s12" method="POST" action="login" id="loginform">
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="sys_name_l" type="text" required class="validate">
+                        <label for="sys_name_l"><span class="sys"></span> Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <input id="pass" type="password" class="validate" required>
+                        <label for="pass">Password</label>
+                    </div>
+                    <input type="hidden" class="sys_type">
+                    <button class="waves-effect waves-light btn-small col s8 m8 l8 blue darken-2 offset-s2 offset-m2 offset-l2" >Login</button>
+                </div>
+            </form>
+
       </div>
       <div id="reg">
           <!-- Registration Tab -->
-          Register
+          <div class="row">
+            <form class="col s12" method="POST" action="register" id="regform">
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="owner_name" type="text" class="validate" required>
+                  <label for="owner_name" >Owner Name</label>
+                </div>
+                <div class="input-field col s6">
+                  <input id="sys_name" type="text" class="validate" required>
+                  <label for="sys_name"><span class="sys"></span> Name</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <input id="password" type="password" class="validate" required>
+                  <label for="password">Password</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="cpassword" type="password" class="validate" required>
+                    <label for="cpassword">Confirm Password</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="tokens" type="password" class="validate" required> 
+                  <label for="tokens">Access Tokens</label>
+                </div>
+              </div>
+              <input type="hidden" class="sys_type">
+              <button class="waves-effect waves-light btn-small col s8 m8 l8 blue darken-2 offset-s2 offset-m2 offset-l2">Register</button>
+            </form>
+          </div>        
       </div>
     </div>
   </div>
-
+  <script src="js/cookies.js" type="text/javascript"></script>
   <script>
         //<!-- Initialise Cards -->
         $(document).ready(function(){
             let opt = {swipeable:true}
             $('.tabs').tabs();
+            M.toast({html: '<Strong>Please select system type : Queue/Shop</strong>',classes: readCookie("theme")})
         });
+
+        // Toggle name
+        function t_name(name){
+            $("#name").html(name);
+            $("#lgn").html(name);
+            $(".sys").html(name);
+            $(".sys_type").val(name);             
+        }
+
+        //Form Validation
+        const frm = document.getElementById("loginform");
+        frm.addEventListener('submit', function (event){
+            if($(".sys_type").val() == "")
+            {
+                M.toast({html: '<Strong>Please select system type : Queue/Shop</strong>',classes: readCookie("theme")})
+                event.preventDefault();
+            }
+        })
+        const regfrm = document.getElementById("regform");
+        regfrm.addEventListener('submit', function (event){
+            if($(".sys_type").val() == "")
+            {
+                M.toast({html: '<Strong>Please select system type : Queue/Shop</strong>',classes: readCookie("theme")})
+                event.preventDefault();
+            }
+        })
+
+        //Tost msg
   </script>
 

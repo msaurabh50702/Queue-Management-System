@@ -29,9 +29,11 @@ app.use(cookieParser())
 
 // Route
 
+let shop_id = 0;
+
 app.get("/",(req,res)=>{
-    res.cookie('theme', shop.theme)
-    res.render("index",{title:"Index",shop_details:shop})
+    res.cookie('theme', shop[shop_id].theme)
+    res.render("index",{title:"Index",shop_details:shop[shop_id]})
 })
 
 //Initialize Server 

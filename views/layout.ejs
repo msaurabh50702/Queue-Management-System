@@ -18,7 +18,7 @@
 
 </head>
 
-<body>
+<body class="blue lighten-5" style="padding:2px;">
     <!-- Vertical Navigation Bar -->
     <ul id="slide-out" class="sidenav">
         <li>
@@ -96,22 +96,16 @@
             $('#qrcode').attr('src', finalURL);
             $('#uri1').attr('src', uri).html(uri);
         </script>
+        <script src="js/cookies.js" type="text/javascript"></script>
           <script>
-              function readCookie(name) {
-                    var nameEQ = name + "=";
-                    var ca = document.cookie.split(';');
-                    for(var i=0;i < ca.length;i++) {
-                        var c = ca[i];
-                        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-                    }
-                    return null;
-                }
             $(document).ready(function () {
-                var theClassList = document.querySelectorAll(".blue");
-                console.log(theClassList)
-                for (var i = 0; i < theClassList.length; i++) {
-                    (theClassList[i].classList).replace('blue', readCookie("theme"))
+                let tags = document.querySelectorAll(".blue");
+                for (var i = 0; i < tags.length; i++) {
+                    (tags[i].classList).replace('blue', readCookie("theme"))
+                }
+                let tags_txt = document.querySelectorAll(".blue-text");
+                for (var i = 0; i < tags_txt.length; i++) {
+                    (tags_txt[i].classList).replace('blue-text', readCookie("theme")+"-text")
                 }
             });
         </script>
