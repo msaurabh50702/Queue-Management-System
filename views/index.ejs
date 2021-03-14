@@ -89,14 +89,14 @@
 
   
   <script>
-        //<!-- Initialise materialize Cards -->
+        // Initialise materialize Components
         $(document).ready(function(){
             let opt = {swipeable:true}
             $('.tabs').tabs();
             $('select').formSelect({classes:"validate"});
             M.toast({html: '<Strong>Please select system type : Queue/Shop</strong>',classes: readCookie("theme")})
-        });
-
+          });
+        
         // Toggle System Type
         function t_name(name){
             $("#name").html(name);
@@ -125,12 +125,17 @@
             }
         })
 
-        shop_names = "<%- shop_names %>".split(",")
-        shop_names.forEach((element,ind) => {
-          if(element != ""){
-            $('#sys_name_l') .append("<option value='"+ind+"'>"+element+"</option>");
-          }
-        });
-        console.log(shop_names)
+        // Function to Fetch Shop Names in Select Tag
+        function fetch_shopNames(){
+          let shop_names = "<%- shop_names %>".split(",")
+          shop_names.forEach((element,ind) => {
+            if(element != ""){
+              $('#sys_name_l') .append("<option value='"+ind+"'>"+element+"</option>");
+            }
+          });
+          console.log('ss',shop_names)
+        }
+
+        fetch_shopNames()
   </script>
 
