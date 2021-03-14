@@ -1,8 +1,10 @@
 //Import Dependencies
-const express = require("express")
+const express = require("express");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts');
+const flash = require('express-flash');
+const session = require('express-session');
 const fs = require('fs');
 
 let shop = require("./details.json")
@@ -14,6 +16,14 @@ const app = express()
 // Manage Middelware
 app.set("view engine","ejs")
 app.use(expressLayouts);
+app.use(flash());
+
+app.use(session({
+    secret: "SOMETHING",
+    cookie: { maxAge: 60000*30 },
+    resave: true,
+    saveUninitialized: false
+  }));
 
 app.set("views","./views")
 
@@ -37,9 +47,12 @@ app.get("/",(req,res)=>{
     shop.slice(1).forEach(element => {
         shops+=element.name+","
     });
-    console.log(shops)
-    res.render("index",{title:"Index",shop_details:shop[shop_id],shop_names:shops})
+    res.render("index",{title:"QMS",shop_details:shop[shop_id],shop_names:shops})
 })
+
+const reg = require("./Handlers/Registration")
+
+app.post("/register",reg.register)
 
 //Initialize Server 
 app.listen(process.env.PORT,()=>{

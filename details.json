@@ -1,20 +1,18 @@
 [
     {
-        "name":"QMS",
-        "Description":"Shop Description",
-        "bg_img_url":"https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        "theme":"blue"
+        "name": "QMS",
+        "Description": "Shop Description",
+        "bg_img_url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "theme": "blue",
+        "tokens": "123"
     },
     {
-        "name":"Mahajan Medicals",
-        "Description":"Shop Description",
-        "bg_img_url":"https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        "theme":"blue"
-    },
-    {
-        "name":"ABC",
-        "Description":"Shop Description",
-        "bg_img_url":"https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        "theme":"blue"
+        "name": "Mahajan Medicals",
+        "owner_name": "Saurabh Mahajan",
+        "sys_type": "Shop",
+        "email": "sai@gmail.com",
+        "mobile": "123",
+        "bg_img_url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "theme": "blue"
     }
 ]

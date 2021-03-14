@@ -118,6 +118,22 @@
                 change_theme("blue",readCookie("theme"))
             });
         </script>
+        <%if (messages.error) { %>
+            <script>
+              $(document).ready(function(){
+                M.toast({html: '<Strong><%= messages.error %></strong>',classes:"red"})
+                  console.log("OK")
+              })
+            </script>
+        <% } %>
+        <%if (messages.success) { %>
+          <script>
+            $(document).ready(function(){
+              M.toast({html: '<Strong><%= messages.success %></strong>',classes:"green"})
+                console.log("OK")
+            })
+          </script>
+        <% } %>
 </body>
 
 </html>
