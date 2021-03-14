@@ -33,7 +33,12 @@ let shop_id = 0;
 
 app.get("/",(req,res)=>{
     res.cookie('theme', shop[shop_id].theme)
-    res.render("index",{title:"Index",shop_details:shop[shop_id]})
+    shops = ""
+    shop.slice(1).forEach(element => {
+        shops+=element.name+","
+    });
+    console.log(shops)
+    res.render("index",{title:"Index",shop_details:shop[shop_id],shop_names:shops})
 })
 
 //Initialize Server 

@@ -14,7 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="QR/jquery.qrcode.js"></script>
+    <!-- Javascript to handle Cookies  -->
+    <script src="js/cookies.js" type="text/javascript"></script>
 
 </head>
 
@@ -26,9 +27,9 @@
                 <div class="background">
                     <img src="<%- shop_details.bg_img_url %>">
                 </div>
-                <a href="#user"><img class="circle" src="images/yuna.jpg" onerror=this.src="img/user-male.png"></a>
-                <a href="#name"><span class="white-text name">John Doe</span></a>
-                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                <a href="#user"><img class="circle" src="images/yuna.jpg"  onerror=this.src="img/user-male.png"></a>
+                <a href="#name"><span class="white-text name">Hey,</span></a>
+                <a href="#email"><span class="white-text email">Please Login</span></a>
             </div>
         </li>
         <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
@@ -46,21 +47,22 @@
 
     </ul>
     <!-- Vertical Navigation Bar -->
+    
     <!-- QR Code Model -->
-    <!-- Modal Structure -->
     <div id="modal1" class="modal" style="width: 300px">
         <center>
-            <div class="modal-content">
-                <h4>QR Code</h4>
+            <div class="modal-content blue lighten-5">
+                <p class="blue-text darken-4" style="font-weight: bold;font-size: 14pt;">Scan to Connect</p>
                 <img class="responsive-img" id="qrcode">
                 <hr>
                 <a id="uri1"></a>
             </div>
-            <div class="modal-footer">
-                <a class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <div class="modal-footer blue accent-1">
+                <a class="modal-close waves-effect waves-green btn-flat blue-text darken-4">Close</a>
             </div>
         </center>
     </div>
+
     <!-- Horizontal Navigation Bar -->
     <nav>
         <div class="nav-wrapper blue">
@@ -80,14 +82,16 @@
     <%- body %>
         <!--JavaScript at end of body for optimized loading-->
         <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+        
+        <!-- Materialize Components Initialization with Javascript-->
         <script>
             $(document).ready(function () {
                 $('.sidenav').sidenav();
-            });
-            $(document).ready(function () {
                 $('.modal').modal();
             });
         </script>
+        
+        <!-- QR Code with Google API -->
         <script>
             let finalURL = 'https://chart.googleapis.com/chart?cht=qr&chl=http://' +
                 location.hostname +
@@ -96,17 +100,22 @@
             $('#qrcode').attr('src', finalURL);
             $('#uri1').attr('src', uri).html(uri);
         </script>
-        <script src="js/cookies.js" type="text/javascript"></script>
-          <script>
-            $(document).ready(function () {
-                let tags = document.querySelectorAll(".blue");
+
+        <!-- Javascript to Change Materialize theme [class form cookies] -->
+        <script>
+            function change_theme(old,theme){
+                console.log(theme)
+                let tags = document.querySelectorAll("."+old);
                 for (var i = 0; i < tags.length; i++) {
-                    (tags[i].classList).replace('blue', readCookie("theme"))
+                    (tags[i].classList).replace(old, theme)
                 }
-                let tags_txt = document.querySelectorAll(".blue-text");
+                let tags_txt = document.querySelectorAll("."+old+"-text");
                 for (var i = 0; i < tags_txt.length; i++) {
-                    (tags_txt[i].classList).replace('blue-text', readCookie("theme")+"-text")
+                    (tags_txt[i].classList).replace(old+'-text', theme+"-text")
                 }
+            }
+            $(document).ready(function () {
+                change_theme("blue",readCookie("theme"))
             });
         </script>
 </body>
