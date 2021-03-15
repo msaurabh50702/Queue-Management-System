@@ -84,9 +84,13 @@
                 </div>
               </div>
               <div class="row">
-                <div class="input-field col s12">
+                <div class="input-field col s10 l10 m10">
                   <input id="tokens" type="password" name="access_token" class="validate" required> 
                   <label for="tokens">Access Tokens</label>
+                </div>
+                <div class="col s2 l2 m2">
+                  <a class="waves-effect waves-light btn modal-trigger blue" href="#thememodal">Theme</a>
+                  <input type="hidden" id="themec" name="theme" value="blue">
                 </div>
               </div>
               <input type="hidden" class="sys_type" name="sys_type">
@@ -96,6 +100,76 @@
       </div>
     </div>
   </div>
+
+  <div id="thememodal" class="modal">
+    <div class="modal-content blue lighten-5">
+      <h4>Choose Theme</h4>
+      <div class="row">
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #f44336;" onclick="pre_theme('red')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #e91e63;" onclick="pre_theme('pink')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #9c27b0;" onclick="pre_theme('purple')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #673ab7;" onclick="pre_theme('deep-purple')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #3f51b5;" onclick="pre_theme('indigo')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" onclick="pre_theme('blue')" style="background-color: #2196f3;"><i class="material-icons left">invert_colors</i></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #03a9f4;" onclick="pre_theme('light-blue')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #00bcd4;" onclick="pre_theme('cyan')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #009688;" onclick="pre_theme('teal')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #4caf50;" onclick="pre_theme('green')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #8bc34a;" onclick="pre_theme('light-green')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #cddc39;" onclick="pre_theme('lime')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #ffeb3b;" onclick="pre_theme('yellow')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #ffc107;" onclick="pre_theme('amber')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #ff9800;" onclick="pre_theme('orange')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #ff5722;" onclick="pre_theme('deep-orange')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #795548;" onclick="pre_theme('brown')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+        <div class="col l2 m2 sm">
+          <a class="btn" style="background-color: #607d8b;" onclick="pre_theme('blue-grey')"><i class="material-icons left">invert_colors</i></a>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer blue darken-2">
+      <a  class="modal-close waves-effect waves-green btn-flat white-text">Choose</a>
+    </div>
+  </div>
+
 
   
   <script>
@@ -147,5 +221,12 @@
         }
 
         fetch_shopNames()
+
+        function pre_theme(col){
+          console.log(col)
+          change_theme(readCookie("theme"),col)
+          document.cookie = "theme="+col;
+          $("#themec").val(col);
+        }
   </script>
 

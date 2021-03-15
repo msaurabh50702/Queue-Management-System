@@ -7,12 +7,12 @@
         "tokens": "123"
     },
     {
-        "name": "Mahajan Medicals",
-        "owner_name": "Saurabh Mahajan",
+        "name": "Warkas's Shop",
+        "owner_name": "Pankaj Bhau",
         "sys_type": "Shop",
-        "email": "sai@gmail.com",
-        "mobile": "123",
+        "email": "pankajvwarkar@gmail.com",
+        "mobile": "154884",
         "bg_img_url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        "theme": "blue"
+        "theme": "purple"
     }
 ]
