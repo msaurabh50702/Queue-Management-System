@@ -30,23 +30,22 @@
     <div class="card-content blue lighten-5">
       <!-- Login Tab -->
       <div id="login">
-            <form class="col s12" method="POST" action="login" id="loginform">
+            <form class="col s12" method="POST" action="/login" id="loginform">
                 <div class="row">
                     <div class="input-field col s12">
-                      <select required  id="sys_name_l">
+                      <select required  name="sys_name" id="sys_name_l">
                         <option value="" disabled selected>Select</option>
                       </select>
                       <label for="sys_name_l"><span class="sys"></span> Name</label>
                     </div>
                     <div class="input-field col s12">
-                        <input id="pass" type="password" class="validate" required>
+                        <input id="pass" name="password" type="password" class="validate" required>
                         <label for="pass">Password</label>
                     </div>
                     <input type="hidden" class="sys_type">
                     <button class="waves-effect waves-light btn-small col s8 m8 l8 blue darken-2 offset-s2 offset-m2 offset-l2" >Login</button>
                 </div>
             </form>
-
       </div>
       
       <!-- Registration Tab -->
@@ -213,11 +212,12 @@
         function fetch_shopNames(){
           let shop_names = "<%- shop_names %>".split(",")
           shop_names.forEach((element,ind) => {
+            console.log(element)
             if(element != ""){
-              $('#sys_name_l') .append("<option value='"+ind+"'>"+element+"</option>");
+              $('#sys_name_l').append("<option value='"+element.toString()+"'>"+element+"</option>");
             }
           });
-          console.log('ss',shop_names)
+          console.log(shop_names)
         }
 
         fetch_shopNames()
