@@ -55,7 +55,7 @@ module.exports ={
                                 // Checking for errors 
                                 if (err) throw err;  
                                
-                                console.log("Done writing"); // Success 
+                                console.log("Shop Added to Details.JSON"); // Success 
                             }); 
                             console.log("Registration Successful...")
                             req.flash('success', "Registration Successful...")
