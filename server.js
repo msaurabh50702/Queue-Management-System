@@ -50,9 +50,21 @@ app.get("/",(req,res)=>{
     res.render("index",{title:"QMS",shop_details:shop[shop_id],shop_names:shops})
 })
 
+app.get("/dashboard",(req,res)=>{
+    if(req.session.isValidUser){
+        res.render("dashboard",{title:"Dashboard",shop_details:shop[shop_id]})
+    }else{
+        req.flash("error","Access Denied...!")
+        res.redirect("/")
+    }
+})
+
 const reg = require("./Handlers/Registration")
+const log1 = require("./Handlers/Login")
 
 app.post("/register",reg.register)
+app.post("/login",log1.login)
+app.get("/logout",log1.logout)
 
 //Initialize Server 
 app.listen(process.env.PORT,()=>{
