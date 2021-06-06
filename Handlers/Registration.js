@@ -43,14 +43,13 @@ module.exports ={
                                 email: email1,
                                 mobile: mobile1,
                                 bg_img_url:"https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-                                theme:"blue",
                                 theme:req.body.theme
                             }
                             let details =  require("../details.json")
                             
 
                             details.push(shop)
-                            
+                            console.log(details)
                             fs.writeFile("details.json", JSON.stringify(details), err => { 
      
                                 // Checking for errors 

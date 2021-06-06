@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt')
 module.exports ={
     login:async(req,res) =>{
         let sys_name1 = req.body.sys_name;
-        console.log(req.body)
         const user = await User.findOne({sys_name:sys_name1})
         if(user) {
             bcrypt.compare(req.body.password, user.password, (err, result)=> {
