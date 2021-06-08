@@ -52,6 +52,12 @@ app.get("/",(req,res)=>{
 
 app.get("/dashboard",(req,res)=>{
     if(req.session.isValidUser){
+        shop.forEach((element,ind) => {
+            if(element.name == req.session.sys_name){
+                shop_id = ind;
+            }
+        });
+        res.cookie('theme', shop[shop_id].theme)
         res.render("dashboard",{title:"Dashboard",shop_details:shop[shop_id]})
     }else{
         req.flash("error","Access Denied...!")

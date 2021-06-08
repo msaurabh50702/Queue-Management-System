@@ -1,1 +1,82 @@
-Dashboard
+<div >
+    <div class="row">
+        <div class="col s12">
+          <ul class="tabs blue darken-1">
+            <li class="tab col s3 m6" ><a class="white-text" href="#MyProd" >My Products</a></li>
+            <li class="tab col s3 m6"><a class="white-text active" href="#Queue">Queue</a></li>
+          </ul>
+        </div>
+        <div id="MyProd" class="col s12">
+          <div class="fixed-action-btn">
+            <a class="btn-floating btn-large red" title="More Options">
+              <i class="large material-icons">eject</i>
+            </a>
+            <ul>
+              <li><a class="btn-floating red modal-trigger waves-effect waves-light" href="#addProd" title="Add New Product"><i class="material-icons">add_circle_outline</i></a></li>
+              <!--li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+              <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+              <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li-->
+            </ul>
+          </div>
+        </div>
+        <div id="Queue" class="col s12">Test 2</div>
+      </div>
+</div>
+
+<!-- Add Product Modal -->
+  <!-- Modal Structure -->
+  <div id="addProd" class="modal">
+    <div class="modal-content">
+      <h4>Add Product</h4>
+      <p>*All Fields are Mandatory</p>
+      <div class="row">
+        <form class="col s12" method="POST" action="/addProduct">
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>Choose Product Image</span>
+              <input type="file">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input name="prod_name" type="text" placeholder="Product Name" id='pnm' class="validate">
+            </div>
+          </div>
+          <div class="input-field col s12">
+            <select name="prod_cat" class="validate" required>
+              <option value="" selected>Choose Product Category</option>
+              <option value="1">Measurable Quantity</option>
+              <option value="2">Liqued</option>
+              <option value="3">Unit</option>
+            </select>
+            <label>Materialize Select</label>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+  </div>
+
+<script>
+
+  $(document).ready(function(){
+    $('.tabs').tabs();
+  });
+
+  $(document).ready(function(){
+    $('.fixed-action-btn').floatingActionButton();
+  });
+
+  $(document).ready(function(){
+    $('.modal').modal();
+  });
+
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
+</script>
