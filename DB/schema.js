@@ -13,5 +13,16 @@ let Users = new mongoose.Schema({
     accVerified:{type:Boolean}
 },{timestamps:true})
 
+let Prod = new mongoose.Schema({
+    product_name:{type:String},
+    product_img:{type:String},
+    product_cat:{type:String},
+    product_price:{type:Number},
+    product_min_qty:{type:Number},
+    product_max_qty:{type:Number},
+    sys_name:{type:String}
+},{timestamps:true})
+
 Users = mongoose.model('Users', Users);
-module.exports = {Users}
+Products = mongoose.model('Products', Prod);
+module.exports = {Users,Products}

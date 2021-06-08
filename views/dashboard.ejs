@@ -2,11 +2,16 @@
     <div class="row">
         <div class="col s12">
           <ul class="tabs blue darken-1">
-            <li class="tab col s3 m6" ><a class="white-text" href="#MyProd" >My Products</a></li>
-            <li class="tab col s3 m6"><a class="white-text active" href="#Queue">Queue</a></li>
+            <li class="tab col s3 m6" ><a class="white-text active" href="#MyProd" >My Products</a></li>
+            <li class="tab col s3 m6"><a class="white-text" href="#Queue">Queue</a></li>
           </ul>
         </div>
         <div id="MyProd" class="col s12">
+          <div class="">
+            <div class="row" id="prod_disp">
+              <!-- PRODUCTS WILL BE LISTED HERE -->
+            </div>
+          </div>
           <div class="fixed-action-btn">
             <a class="btn-floating btn-large red" title="More Options">
               <i class="large material-icons">eject</i>
@@ -25,45 +30,61 @@
 
 <!-- Add Product Modal -->
   <!-- Modal Structure -->
-  <div id="addProd" class="modal">
+  <div id="addProd" class=" modal modal-fixed-footer">
     <div class="modal-content">
       <h4>Add Product</h4>
       <p>*All Fields are Mandatory</p>
       <div class="row">
-        <form class="col s12" method="POST" action="/addProduct">
-          <div class="file-field input-field">
-            <div class="btn">
-              <span>Choose Product Image</span>
-              <input type="file">
+        <form class="col s12" id="addProdfrm" method="POST" action="/addProduct" enctype="multipart/form-data">
+          <div class="row">
+            <div class="input-field col s12 m8">
+              <input name="prod_name" type="text" placeholder="Product Name"  class="validate" required>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text" required>
+            <div class="input-field col s12 m4">
+              <input name="price" type="number" placeholder="Product Price"  class="validate" required>
             </div>
           </div>
           <div class="row">
-            <div class="input-field col s12">
-              <input name="prod_name" type="text" placeholder="Product Name" id='pnm' class="validate">
+            <div class="input-field col s12 m6">
+              <input name="min_qty" type="number" placeholder="Minimum Quantity"  class="validate" required>
+            </div>
+            <div class="input-field col s12 m6">
+              <input name="max_qty" type="number" placeholder="Maximum Quantity"  class="validate" required>
             </div>
           </div>
-          <div class="input-field col s12">
-            <select name="prod_cat" class="validate" required>
-              <option value="" selected>Choose Product Category</option>
-              <option value="1">Measurable Quantity</option>
-              <option value="2">Liqued</option>
-              <option value="3">Unit</option>
-            </select>
-            <label>Materialize Select</label>
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <select name="prod_cat" class="validate" required>
+                <option value="" selected>Choose Product Category</option>
+                <option value="1">Measurable Quantity</option>
+                <option value="2">Liqued</option>
+                <option value="3">Unit</option>
+              </select>
+              <label>Materialize Select</label>
+            </div>
+            <div class="col m6">
+              <div class="file-field input-field">
+                <div class="btn">
+                  <span>Choose Product Image</span>
+                  <input type="file" name="ProdPic" required>
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" required>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      <button type="Submit" class="modal-close waves-effect waves-green btn-flat" onclick="Add_prod()">Add Product</button>
     </div>
-  </div>
+  </div> 
+  
+
 
 <script>
-
   $(document).ready(function(){
     $('.tabs').tabs();
   });
@@ -79,4 +100,47 @@
   $(document).ready(function(){
     $('select').formSelect();
   });
+
+  function Add_prod(){
+    inp = document.getElementById('addProdfrm').getElementsByTagName('input')
+    for (i = 0; i < inp.length; i++) {
+        if(inp[i].value == ""){
+          M.toast({html: '<Strong>All fields are mandatory</strong>',classes:"red"})
+          return
+        }
+    }
+    $('#addProdfrm').submit();
+  }
+</script>
+
+<script>
+  let prod = ("<%= products %>");
+  prod = prod.split("&#34;").join('"')
+  prod = JSON.parse(prod)
+  for(i=0;i<prod.length;i++){
+    let html = `
+              <div class="col s6 m3">
+                <div class="card hoverable">
+                  <div class="card-image">
+                    <img class="responsive-img" style="height:150px" src="`+prod[i].product_img+`">
+                  </div>
+                  <div class="card-content">
+                    <span class="card-title">`+prod[i].product_name+`</span>
+                    <p>Price : `+prod[i].product_price+`</p>
+                    <ul>
+                      <li>Product Category : `+prod[i].product_cat+`</li>
+                      <li>Minimum Quantity Can Order : `+prod[i].product_min_qty+`</li>
+                      <li>Maximum Quantity Can Order : `+prod[i].product_max_qty+`</li>
+                    </ul>
+                  </div>
+                  <div class="card-action">
+                    <button>Remove Product</button>
+                    <button>Update Product</button>
+                  </div>
+                </div>
+              </div>
+    `
+    $('#prod_disp').append(html)
+    console.log(prod[i].product_name)
+  }
 </script>
