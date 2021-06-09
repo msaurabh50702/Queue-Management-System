@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts');
 const flash = require('express-flash');
 const session = require('express-session');
-const multer = require('multer');
 const fs = require('fs');
 
 let shop = require("./details.json")
@@ -37,22 +36,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser())
-
-
-const Products = require("./DB/schema").Products;
-
-
-let storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-      callback(null, './ProdImg');
-    },
-    filename: function (req, file, callback) {
-      callback(null, file.originalname.split(' ').join('_'));
-    }
-});
-
-let upload = multer({ storage : storage }).array('ProdPic',25);
-
 
 // Route
 
@@ -87,44 +70,15 @@ app.get("/dashboard",async(req,res)=>{
 })
 
 
-app.post("/addProduct",(req,res)=>{
-    if(req.session.isValidUser){
-        upload(req,res,function(err) {
-            if(err) {
-                console.log(err)
-                req.flash('error', "Error uploading file.")
-                return res.redirect('dashboard')
-            }
-            prod = new Products({
-                product_name:req.body.prod_name,
-                product_img:req.files[0].filename,
-                product_cat:req.body.prod_cat,
-                product_price:req.body.price,
-                product_min_qty:req.body.min_qty,
-                product_max_qty:req.body.max_qty,
-                sys_name:req.session.sys_name
-            })
-            prod.save().then(result=>{
-                req.flash('success', "Product Added")
-                return res.redirect('dashboard')
-            }).catch(err=>{
-                req.flash('error', "Error While Adding Product")
-                return res.redirect('dashboard')
-            })
-        });
-    }
-    else{
-        req.flash("error","Access Denied...!")
-        res.redirect("/")
-    }
-})
-
 const reg = require("./Handlers/Registration")
 const log1 = require("./Handlers/Login")
+const prod = require("./Handlers/Prod_Mgmt")
 
 app.post("/register",reg.register)
 app.post("/login",log1.login)
 app.get("/logout",log1.logout)
+app.post("/addProduct",prod.addProduct)
+app.get('/removeProduct',prod.removeProduct)
 
 //Initialize Server 
 app.listen(process.env.PORT,()=>{
