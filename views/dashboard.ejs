@@ -81,6 +81,49 @@
       <button type="Submit" class="modal-close waves-effect waves-green btn-flat" onclick="Add_prod()">Add Product</button>
     </div>
   </div> 
+
+  <!--  Update Product Modal -->
+  <div id="updProd" class=" modal modal-fixed-footer">
+    <div class="modal-content">
+      <div class="row">
+        <div class="col s10 m10">
+          <h4>Update Product</h4>
+          <p>*All Fields are Mandatory</p>
+        </div>
+        <div class="col m2 s2">
+          <img class="responsive-img" alt="Product_Image" id="pimg">
+        </div>
+      </div>
+      <div class="row">
+        <form class="col s12" id="updProdfrm" method="POST" action="/updateProduct">
+          <div class="row">
+            <div class="input-field col s12 m8">
+              <input name="prod_name" type="text" placeholder="Product Name" id="pnm"  class="validate" required>
+              <label for="pnm">Product Name</label>
+            </div>
+            <div class="input-field col s12 m4">
+              <input name="price" type="number" placeholder="Product Price" id="ppr"  class="validate" required>
+              <label for="ppr">Product Price</label>
+            </div>
+          </div>
+          <input type="hidden" id="pid" name="pid" readonly>
+          <div class="row">
+            <div class="input-field col s12 m6">
+              <input name="min_qty" type="number" placeholder="Minimum Quantity" id="miq"  class="validate" required>
+              <label for="miq">Min Quantity can Order</label>
+            </div>
+            <div class="input-field col s12 m6">
+              <input name="max_qty" type="number" placeholder="Maximum Quantity" id="mxq"  class="validate" required>
+              <label for="ppr">Max Quantity can Order</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="Submit" class="modal-close waves-effect waves-green btn-flat" onclick="upd_prod()">Update Product</button>
+    </div>
+  </div> 
   
 
 
@@ -111,6 +154,10 @@
     }
     $('#addProdfrm').submit();
   }
+  function upd_prod(){
+    
+    $('#updProdfrm').submit();
+  }
 </script>
 
 <script>
@@ -135,12 +182,21 @@
                   </div>
                   <div class="card-action">
                     <a class="waves-effect waves-light btn-small col s5 m5" style="background-color:#d50000" href="/removeProduct?id=`+prod[i]._id+`">Remove Product</a>
-                    <a class="waves-effect waves-light btn-small col s5 m5" style="margin-left:10px; background-color:#ffa000">Update Product</a>
+                    <a class="waves-effect waves-light btn-small col s5 m5" style="margin-left:10px; background-color:#ffa000" onclick="updateProduct(`+i+`)">Update Product</a>
                   </div>
                 </div>
               </div>
     `
     $('#prod_disp').append(html)
-    console.log(prod[i].product_name)
+  }
+
+  function updateProduct(ind){
+    $("#pid").val(prod[ind]._id)
+    $("#pnm").val(prod[ind].product_name)
+    $("#mxq").val(prod[ind].product_max_qty)
+    $("#miq").val(prod[ind].product_min_qty)
+    $("#ppr").val(prod[ind].product_price)
+    $("#pimg").attr("src", prod[ind].product_img)
+    $('#updProd').modal('open');
   }
 </script>

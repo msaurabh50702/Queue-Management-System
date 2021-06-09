@@ -60,4 +60,19 @@ module.exports ={
             res.redirect("/")
         }
     },
+    updateProduct:(req,res)=>{
+        if(req.session.isValidUser){
+            Products.updateOne({"_id":req.body.pid}, { product_name: req.body.prod_name, product_price: req.body.price, product_max_qty:req.body.max_qty,product_min_qty:req.body.min_qty }).then(result=>{
+                req.flash('success', "Product Updated")
+                return res.redirect('dashboard')
+            }).catch(err=>{
+                req.flash('error', "Error While Updating Product")
+                return res.redirect('dashboard')
+            })
+        }
+        else{
+            req.flash("error","Access Denied...!")
+            res.redirect("/")
+        }
+    },
 }

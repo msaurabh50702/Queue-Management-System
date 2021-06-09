@@ -77,8 +77,10 @@ const prod = require("./Handlers/Prod_Mgmt")
 app.post("/register",reg.register)
 app.post("/login",log1.login)
 app.get("/logout",log1.logout)
+
 app.post("/addProduct",prod.addProduct)
 app.get('/removeProduct',prod.removeProduct)
+app.post('/updateProduct',prod.updateProduct)
 
 //Initialize Server 
 app.listen(process.env.PORT,()=>{
