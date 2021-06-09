@@ -20,61 +20,11 @@
 </head>
 
 <body class="blue lighten-5" style="padding:2px;">
-    <!-- Vertical Navigation Bar -->
-    <ul id="slide-out" class="sidenav">
-        <li>
-            <div class="user-view">
-                <div class="background">
-                    <img src="<%- shop_details.bg_img_url %>">
-                </div>
-                <a href="#user"><img class="circle" src="images/yuna.jpg"  onerror=this.src="img/user-male.png"></a>
-                <a href="#name"><span class="white-text name">Hey,</span></a>
-                <a href="#email"><span class="white-text email">Please Login</span></a>
-            </div>
-        </li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
-        <li>
-            <div class="divider"></div>
-        </li>
-        <li><a class="subheader">QR Code</a></li>
-        <li><a href="#modal1" class="modal-trigger"><i class="material-icons left">qr_code</i>Show QR</a></li>
-
-    </ul>
-    <!-- Vertical Navigation Bar -->
-    
-    <!-- QR Code Model -->
-    <div id="modal1" class="modal" style="width: 300px">
-        <center>
-            <div class="modal-content blue lighten-5">
-                <p class="blue-text darken-4" style="font-weight: bold;font-size: 14pt;">Scan to Connect</p>
-                <img class="responsive-img" id="qrcode">
-                <hr>
-                <a id="uri1"></a>
-            </div>
-            <div class="modal-footer blue accent-1">
-                <a class="modal-close waves-effect waves-green btn-flat blue-text darken-4">Close</a>
-            </div>
-        </center>
-    </div>
-
-    <!-- Horizontal Navigation Bar -->
     <nav>
         <div class="nav-wrapper blue">
-            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <a href="#" class="brand-logo" style="font-size: 150%;">
-                <%- shop_details.name %>
+                <%- shop_name %>
             </a>
-            <ul class="right hide-on-med-and-down">
-                <li><a href="#modal1" class="modal-trigger"><i class="material-icons left">qr_code</i></a></li>
-                <li data-target="slide-out" class="sidenav-trigger"><a href="#"><i
-                            class="material-icons right">view_module</i>Menu</a></li>
-            </ul>
         </div>
     </nav>
     <!-- Horizontal Navigation Bar End-->

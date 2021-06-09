@@ -1,0 +1,116 @@
+<div class="">
+    <div class="row" id="shop_disp">
+      <!-- SHOPS WILL BE LISTED HERE -->
+    </div>
+    <div class="fixed-action-btn">
+        <form action="/checkout" method="POST" id="checkoutfrm">
+            <input type="hidden" name="Product_id" id="pids">
+        </form>
+        <a class="btn-floating btn-large waves-effect waves-light" id="cart_btn" onclick="checkout()"><i class="material-icons">add_shopping_cart</i></a>
+    </div>
+</div>
+<script>
+  let prod = ("<%= prod_details %>");
+  prod = prod.split("&#34;").join('"')
+  prod = JSON.parse(prod)
+  for(i=0;i<prod.length;i++){
+      let pi = prod[i]._id;
+      let unit = "Qty"
+      let qty = 0
+      if(localStorage.getItem(String(pi))!=null)
+        qty = localStorage.getItem(String(pi))
+      if(prod[i].product_cat == 1)
+        unit = "KG"
+      else if(prod[i].product_cat == 2)
+        unit = "Ltr"
+      else  
+        unit = "Qty"
+
+    let html = `
+              <div class="col s6 m3">
+                <div class="card hoverable">
+                  <div class="card-image">
+                    <img class="responsive-img" style="height:150px" src="`+prod[i].product_img+`">
+                  </div>
+                  <div class="card-content">
+                    <span class="card-title">`+prod[i].product_name+`</span>
+                    <div class="row">
+                        <div class='col s6 m6'>
+                            <p>Price : `+prod[i].product_price+`</p>
+                        </div>
+                        <div class='col s6 m6'>
+                            <span class="new badge blue" data-badge-caption="`+unit+`" id="`+prod[i]._id+`_qty">`+qty+`</span>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="card-action">
+                    <a class="waves-effect waves-light btn-small col s5 m5" style="background-color:#d50000" onclick="rem_Product('`+pi+`',`+prod[i].product_max_qty+`)">Remove</a>
+                    <a class="waves-effect waves-light btn-small col s5 m5" style="margin-left:10px; background-color:#ffa000" onclick="add_Product('`+pi+`',`+prod[i].product_max_qty+`)">Order it</a>
+                  </div>
+                </div>
+              </div>
+    `
+    $('#shop_disp').append(html)
+  }
+
+  $(document).ready(function(){
+    $('.tooltipped').tooltip();
+  });
+</script>
+
+
+<script>
+    function add_Product(pid,mx){
+        if(localStorage.getItem(pid)==null){
+            localStorage.setItem(pid, 1);
+            $("#"+pid+"_qty").html(localStorage[pid])
+        }
+        else if(localStorage.getItem(pid)<mx){
+            localStorage[pid] = Number(localStorage.getItem(pid))+1
+            $("#"+pid+"_qty").html(localStorage[pid])
+        }
+        else{
+            M.toast({html: '<Strong>Maximum Limit Reached</strong>',classes:"red"})
+        }
+        console.log(localStorage)
+        if(Number(localStorage.length) > 0){
+            $("#cart_btn").addClass("green")
+            $("#cart_btn").removeClass("red")
+            $("#cart_btn").removeClass("disable")
+        }
+    }
+    function rem_Product(pid,mx){
+        if(localStorage.getItem(pid)>0){
+            localStorage[pid] = Number(localStorage.getItem(pid))-1
+            $("#"+pid+"_qty").html(localStorage.getItem(pid))
+        }
+        else{
+            M.toast({html: '<Strong>No Product in cart</strong>',classes:"red"})
+        }
+        if(localStorage.getItem(pid)==0)
+            localStorage.removeItem(pid);
+        console.log(localStorage)
+        if(Number(localStorage.length) == 0){
+            $("#cart_btn").addClass("red")
+            $("#cart_btn").removeClass("green")
+            $("#cart_btn").addClass("disable")
+        }
+    }
+
+    if(Number(localStorage.length) > 0){
+        $("#cart_btn").addClass("green")
+        $("#cart_btn").removeClass("disable")
+    }
+    else if(Number(localStorage.length) <= 0){
+        $("#cart_btn").addClass("red")
+        $("#cart_btn").addClass("disable")
+    }
+</script>
+
+<script>
+    function checkout()
+    {
+        $("#pids").val(JSON.stringify(localStorage))
+        $("#checkoutfrm").submit()
+    }
+</script>

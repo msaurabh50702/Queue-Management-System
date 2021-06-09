@@ -1,0 +1,35 @@
+<div class="">
+    <div class="row" id="shop_disp">
+      <!-- SHOPS WILL BE LISTED HERE -->
+    </div>
+</div>
+
+<script>
+  let prod = ("<%= shop_details %>");
+  prod = prod.split("&#34;").join('"')
+  prod = JSON.parse(prod)
+  for(i=1;i<prod.length;i++){
+    let html = `
+              <div class="col s6 m3">
+                <div class="card hoverable tooltipped" data-position="bottom" data-tooltip="Click to Explore Products" onclick="location.href = '/`+prod[i].name+`?id=`+i+`';">
+                  <div class="card-image">
+                    <img class="responsive-img" style="height:150px" src="`+prod[i].bg_img_url+`">
+                  </div>
+                  <div class="card-content">
+                    <span class="card-title">`+prod[i].name+`</span>
+                    <p>Owner : `+prod[i].owner_name+`</p>
+                    <ul>
+                      <li>Email : `+prod[i].email+`</li>
+                      <li>Mob Number : `+prod[i].mobile+`</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+    `
+    $('#shop_disp').append(html)
+  }
+
+  $(document).ready(function(){
+    $('.tooltipped').tooltip();
+  });
+</script>

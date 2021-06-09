@@ -12,6 +12,7 @@ module.exports ={
                     req.session.userId = user.id;
                     req.session.userRole = user.accountType;
                     req.session.sys_name = user.sys_name;
+                    
                     req.flash('success', "Welcome, "+user.owner_name)
                     return res.redirect('dashboard')
                 }
