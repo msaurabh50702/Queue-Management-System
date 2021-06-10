@@ -6,6 +6,7 @@ const expressLayouts = require('express-ejs-layouts');
 const flash = require('express-flash');
 const session = require('express-session');
 const fs = require('fs');
+const Order = require("./DB/schema").Orders
 
 let shop = require("./details.json")
 
@@ -97,7 +98,7 @@ app.post("/addQueue",reg.addQueue)
 
 // Place ORDER
 const Queue = require("./Handlers/Queue").Queue
-const Order = require("./DB/schema").Orders
+
 app.post("/placeOrder",(req,res)=>{
     if(Queue_dict.length==0)
         return res.send("No Queue Open")
@@ -125,6 +126,41 @@ app.post("/placeOrder",(req,res)=>{
         Queue_dict[min_ind].enqueue(result,result.order_time)
         console.log(Queue_dict)
         return res.send("<p style='color:red'>Order Placed :- "+result._id+"</p>")
+    })
+})
+
+app.post("/completeOrder",(req,res)=>{
+    console.log("Completed")
+})
+
+app.get("/orderDetails",(req,res)=>{
+    if(req.session.userId)
+        Order.find({queue_id:req.session.userId}).then(data=>{
+            res.json(data)
+        })
+    else
+        res.send("Invalid Operation")
+})
+
+app.get("/getProdDtl/:id",(req,res)=>{
+    Order.findOne({_id:req.params.id},{order_products:1}).then(data=>{
+        id_arr = []
+        di = {}
+        res_arr = []
+        d = String(data.order_products).replace("{","").replace("}","").split(",")
+        d.forEach(elem=>{
+            k = elem.split(":")[0].split('"').join().replace(',',"").replace(",","")
+            v= elem.split(":")[1].split('"').join().replace(',',"").replace(",","")
+            id_arr.push(k)
+            di[k] = v
+        })
+        Products.find({"_id" : { "$in" : id_arr}}).then(pro=>{
+            pro.forEach((element,ind) => {
+                res_arr.push({item:element,qty:di[element._id]})
+            });
+            console.log(pro)
+            res.json(res_arr)
+        })
     })
 })
 

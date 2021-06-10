@@ -3,7 +3,7 @@
         <div class="col s12">
           <ul class="tabs blue darken-1">
             <li class="tab col s4 m4" ><a class="white-text active" href="#MyProd" >My Products</a></li>
-            <li class="tab col s4 m4"><a class="white-text" href="#orders">My Orders</a></li>
+            <li class="tab col s4 m4"><a class="white-text" href="#orders" onclick="getOrders()">My Orders</a></li>
             <li class="tab col s4 m4"><a class="white-text" href="#Queue">Queue</a></li>
           </ul>
         </div>
@@ -25,7 +25,10 @@
             </ul>
           </div>
         </div>
-        <div id="orders" class="col s12">Test 2</div>
+        <div id="orders" class="col s12">
+          <!-- MyOrders -->
+
+        </div>
         <div id="Queue" class="col s12">
           <div class="card blue darken-2"  style="max-width: 600px;margin: auto;margin-top: 50px;" >
             <!-- Card Header -->
@@ -174,12 +177,30 @@
       <button type="Submit" class="modal-close waves-effect waves-green btn-flat" onclick="upd_prod()">Update Product</button>
     </div>
   </div> 
-  
+
+  <!-- ProductDetails Modal -->
+  <!-- Modal Structure -->
+<div id="pmodal" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Product Details</h4>
+      <div id="product_list" class="row">
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>  
 
 
 <script>
   $(document).ready(function(){
     $('.tabs').tabs();
+    
+  });
+
+  $(document).ready(function(){
+    $('.tooltipped').tooltip();
   });
 
   $(document).ready(function(){
@@ -214,6 +235,7 @@
   let prod = ("<%= products %>");
   prod = prod.split("&#34;").join('"')
   prod = JSON.parse(prod)
+  
   for(i=0;i<prod.length;i++){
     let html = `
               <div class="col s6 m3">
@@ -248,5 +270,60 @@
     $("#ppr").val(prod[ind].product_price)
     $("#pimg").attr("src", prod[ind].product_img)
     $('#updProd').modal('open');
+  }
+
+  function getOrders(){
+    $.get("/orderDetails", function(data, status){
+      if(status == "success"){
+        for(let i=0;i<data.length;i++){
+          let pi = data[i]._id;
+          let html = `
+              <div class="col s12 m4" onclick="getProducts('`+pi+`')" title="Click to get Details">
+                  <div class="card-panel grey lighten-5 z-depth-1 tooltipped" data-position="bottom" data-tooltip="Click to Explore Products">
+                  <div class="row valign-wrapper">
+                      <div class="col s6">
+                        <span class="black-text">
+                            <strong>`+data[i].cust_name+`</strong>
+                            <p>`+data[i].cust_email+`<br>
+                               <span style="color:green">Rs. `+data[i].amount+`</span></p>
+                        </span>
+                      </div>
+                      <div class="col s6">
+                        <a class="waves-effect waves-light btn">Mark as Delivered</a>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+          `
+          $('#orders').html(html)
+        }
+      } 
+    });
+  }
+  function getProducts(pi){
+    $("#pmodal").modal('open')
+    $.get("/getProdDtl/"+pi, function(data, status){
+      html = ""
+      data.forEach(element => {
+        html += `<div class="col s12 m4">
+                  <div class="card-panel grey lighten-5 z-depth-1">
+                  <div class="row valign-wrapper">
+                    <div class="col s4">
+                        <img src="`+element.item.product_img+`" alt="Image" class="circle responsive-img" style="height:100px;width:100px">
+                    </div>
+                      <div class="col s6">
+                        <div class="black-text">
+                            <strong">`+element.item.product_name+`</strong>
+                            <p>Quantity : `+element.qty+`<br>
+                               <span style="color:green">Rs. `+Number(element.item.product_price)*Number(element.qty)+`</span></p>
+                        </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>`
+      });
+      console.log(data)
+      $("#product_list").html(html)
+    })
   }
 </script>
