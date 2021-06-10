@@ -1,5 +1,7 @@
 const User = require("../DB/schema").Users
 const bcrypt = require('bcrypt')
+const Queue = require("../Handlers/Queue").Queue
+let Queue_dict = []
 
 module.exports ={
     login:async(req,res) =>{
@@ -18,9 +20,19 @@ module.exports ={
                     req.session.userRole = user.accountType;
                     req.session.sys_name = user.sys_name;
                     req.session.ttl_queue = user.ttl_queue;
-                    
-                    req.flash('success', "Welcome, "+user.owner_name)
-                    return res.redirect('dashboard')
+                    if(user.sys_type == "Shop"){
+                        if(Queue_dict.length == 0){
+                            queue_id = user.queueID.split(",")
+                            queue_id.forEach(qid => {
+                                Queue_dict.push(new Queue(qid))
+                            });
+                        }
+
+                        req.flash('success', "Welcome, "+user.owner_name)
+                        return res.redirect('dashboard')
+                    }else{
+                        res.end("QUEUE")
+                    }
                 }
                 else{
                     req.flash('error', "Password not match")
@@ -42,4 +54,5 @@ module.exports ={
             res.redirect("/")
         })
     },
+    Queue_dict
 }

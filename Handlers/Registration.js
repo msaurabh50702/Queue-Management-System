@@ -118,12 +118,35 @@ module.exports ={
                         Users.findOne({ _id: req.session.userId }, function (err, doc){
                             doc.ttl_queue += 1;
                             doc.queueID += ","+result._id;
+                            req.session.ttl_queue = Number(req.session.ttl_queue) + 1;
                             doc.save();
+                        });
+
+                        let shop = {
+                            name:sys_name1,
+                            owner_name: owner_name1,
+                            sys_type: sys_type1,
+                            email: email1,
+                            mobile: mobile1,
+                            bg_img_url:"https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+                            theme:req.body.theme
+                        }
+                        let details =  require("../details.json")
+                        
+
+                        details.push(shop)
+                        console.log(details)
+                        fs.writeFile("details.json", JSON.stringify(details), err => { 
+ 
+                            // Checking for errors 
+                            if (err) throw err;  
+                           
+                            console.log("Shop Added to Details.JSON"); // Success 
                         });
                         
                         console.log("Queue Added Successful...")
                         req.flash('success', "Queue Added Successful...")
-                        return res.redirect('dashboard')
+                        return res.redirect('logout')
                     })
                     .catch((dberr)=>{
                         console.log("Registration Failed",dberr)

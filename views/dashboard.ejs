@@ -45,7 +45,7 @@
                     <label for="owner_name" >Owner Name</label>
                   </div>
                   <div class="input-field col s6">
-                    <input id="sys_name" type="text" name="sys_name" value="<%- shop_details.name %> - <%- Qcnt %>" readonly class="validate" required>
+                    <input id="sys_name" type="text" name="sys_name" value="<%- shop_details.name %> Queue - <%- Qcnt %>" readonly class="validate" required>
                     <label for="sys_name"><span class="sys">Queue</span> Name</label>
                   </div>
                 </div>
@@ -219,10 +219,10 @@
               <div class="col s6 m3">
                 <div class="card hoverable">
                   <div class="card-image">
-                    <img class="responsive-img" style="height:150px" src="`+prod[i].product_img+`">
+                    <img class="responsive-img" style="height:150px;" src="`+prod[i].product_img+`">
                   </div>
                   <div class="card-content">
-                    <span class="card-title">`+prod[i].product_name+`</span>
+                    <span class="card-title" style="white-space: nowrap;overflow:hidden;text-overflow: ellipsis;">`+prod[i].product_name+`</span>
                     <p>Price : `+prod[i].product_price+`</p>
                     <ul>
                       <li>Product Category : `+prod[i].product_cat+`</li>

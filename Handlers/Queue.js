@@ -1,9 +1,10 @@
 class Queue
 {
-    constructor()
+    constructor(id)
     {
         this.items = [];
         this.time = 0;
+        this.qid = id
     }
     enqueue(element){    
         this.items.push(element);

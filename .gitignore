@@ -104,6 +104,7 @@ dist
 # TernJS port file
 .tern-port
 
+details.json
 
 .zip
 *.zip

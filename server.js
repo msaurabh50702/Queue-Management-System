@@ -13,6 +13,8 @@ require('dotenv').config()
 
 const app = express()
 
+let Queue_dict = require("./Handlers/Login").Queue_dict
+
 // Manage Middelware
 app.set("view engine","ejs")
 app.use(expressLayouts);
@@ -89,18 +91,22 @@ app.get('/shops',cust_opr.disp_shops)
 app.get('/my_shop',cust_opr.disp_products)
 app.post("/checkout",cust_opr.checkout)
 
+app.post("/addQueue",reg.addQueue)
+
+
+// Place ORDER
 app.post("/placeOrder",(req,res)=>{
     console.log(req.body)
     res.send("PLACE ORDER")
 })
 
-app.post("/addQueue",reg.addQueue)
-
 const Queue = require("./Handlers/Queue").Queue
+
 app.get("/queue",(req,res)=>{
-    var queue = new Queue();
+    console.log(Queue_dict)
+    var queue = new Queue("ghjk");
     console.log(queue.dequeue());
-    console.log(queue.isEmpty());
+    console.log(queue.isEmpty()+queue.qid);
     queue.enqueue(10);
     queue.enqueue(20);
     queue.enqueue(30);
@@ -117,6 +123,9 @@ app.get("/queue",(req,res)=>{
     console.log(queue.printQueue());
 
 })
+
+
+
 
 //Initialize Server 
 app.listen(process.env.PORT,()=>{
