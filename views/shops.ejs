@@ -9,6 +9,8 @@
   prod = prod.split("&#34;").join('"')
   prod = JSON.parse(prod)
   for(i=1;i<prod.length;i++){
+    if(prod[i].sys_type == "Queue")
+      continue
     let html = `
               <div class="col s6 m3">
                 <div class="card hoverable tooltipped" data-position="bottom" data-tooltip="Click to Explore Products" onclick="location.href = '/my_shop?shop_name=`+prod[i].name+`&id=`+i+`';">

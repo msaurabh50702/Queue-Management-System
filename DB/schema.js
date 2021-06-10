@@ -25,6 +25,18 @@ let Prod = new mongoose.Schema({
     sys_name:{type:String}
 },{timestamps:true})
 
+let Ord = new mongoose.Schema({
+    cust_name:{type:String},
+    cust_email:{type:String},
+    order_products:{type:String},
+    amount:{type:Number},
+    order_time:{type:Number},
+    shop_name:{type:String},
+    order_status:{type:String},
+    queue_id:{type:String}
+})
+
 Users = mongoose.model('Users', Users);
 Products = mongoose.model('Products', Prod);
-module.exports = {Users,Products}
+Orders = mongoose.model('Orders',Ord)
+module.exports = {Users,Products,Orders}

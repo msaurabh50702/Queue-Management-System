@@ -14,6 +14,7 @@ require('dotenv').config()
 const app = express()
 
 let Queue_dict = require("./Handlers/Login").Queue_dict
+const total_time = {1:"60",2:"60",3:"30"}
 
 // Manage Middelware
 app.set("view engine","ejs")
@@ -95,12 +96,37 @@ app.post("/addQueue",reg.addQueue)
 
 
 // Place ORDER
-app.post("/placeOrder",(req,res)=>{
-    console.log(req.body)
-    res.send("PLACE ORDER")
-})
-
 const Queue = require("./Handlers/Queue").Queue
+const Order = require("./DB/schema").Orders
+app.post("/placeOrder",(req,res)=>{
+    if(Queue_dict.length==0)
+        return res.send("No Queue Open")
+    time_arr = []
+    min_ind = 0
+    min=99999999999
+    for(let i=0;i<Queue_dict.length;i++){
+        if(Queue_dict[i].time <= min){
+            min_ind = i
+            min = Queue_dict[i].time
+        }
+        time_arr.push(Queue_dict[i].time)
+    }
+    let order = new Order({
+        cust_name:req.body.name,
+        cust_email:req.body.email,
+        order_products:req.body.product_ids,
+        amount:Number(req.body.amount),
+        order_time:Number(req.body.order_time),
+        shop_name:req.session.sys_name,
+        order_status:"Pending",
+        queue_id:Queue_dict[min_ind].qid
+    })
+    order.save().then(result=>{
+        Queue_dict[min_ind].enqueue(result,result.order_time)
+        console.log(Queue_dict)
+        return res.send("<p style='color:red'>Order Placed :- "+result._id+"</p>")
+    })
+})
 
 app.get("/queue",(req,res)=>{
     console.log(Queue_dict)

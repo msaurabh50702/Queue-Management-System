@@ -27,7 +27,6 @@ module.exports ={
                                 Queue_dict.push(new Queue(qid))
                             });
                         }
-
                         req.flash('success', "Welcome, "+user.owner_name)
                         return res.redirect('dashboard')
                     }else{

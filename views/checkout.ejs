@@ -30,11 +30,13 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input  id="mob" name="mob" type="number" class="validate">
-                    <label for="mob">Mobile Number</label>
+                    <input  id="email" name="email" type="email" class="validate">
+                    <label for="email">Mobile Number</label>
                 </div>
             </div>
             <input type="hidden" readonly id="prod_ids" name="product_ids">
+            <input type="hidden" readonly id="amount" name="amount">
+            <input type="hidden" readonly id="ord_tm" name="order_time">
         </form>
       </div>
     </div>
@@ -48,18 +50,25 @@
     prod = prod.split("&#34;").join('"')
     prod = JSON.parse(prod)
     let total = 0
+    let order_time = 0
     for(i=0;i<prod.length;i++){
         let pi = prod[i]._id;
         let unit = "Qty"
         let qty = 0
         if(localStorage.getItem(String(pi))!=null)
           qty = localStorage.getItem(String(pi))
-        if(prod[i].product_cat == 1)
+        if(prod[i].product_cat == 1){
           unit = "KG"
-        else if(prod[i].product_cat == 2)
+          order_time += 60;
+        }
+        else if(prod[i].product_cat == 2){
           unit = "Ltr"
-        else  
+          order_time += 60;
+        }
+        else{
           unit = "Qty"
+          order_time += 30;
+        }
 
         let prod_price = Number(prod[i].product_price) * Number(localStorage.getItem(prod[i]._id))
         total = total + prod_price
@@ -85,12 +94,16 @@
       $('#shop_disp').append(html)
     }
     $("#amt").html("<strong>Total Amount : Rs."+total+"</strong>")
+    
 
     function placeOrder(){
         $("#prod_ids").val(JSON.stringify(localStorage))
+        $("#ord_tm").val(order_time)
+        $("#amount").val(total)
         inp = document.getElementById('dtl_frm').getElementsByTagName('input')
         for (i = 0; i < inp.length; i++) {
             if(inp[i].value == ""){
+              console.log(inp[i])
             M.toast({html: '<Strong>All fields are mandatory</strong>',classes:"red"})
             return
             }

@@ -6,8 +6,9 @@ class Queue
         this.time = 0;
         this.qid = id
     }
-    enqueue(element){    
+    enqueue(element,t){    
         this.items.push(element);
+        this.time = this.time + Number(t);
     }
     dequeue(){
         if(this.isEmpty())
