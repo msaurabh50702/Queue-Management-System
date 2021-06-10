@@ -74,6 +74,7 @@ const reg = require("./Handlers/Registration")
 const log1 = require("./Handlers/Login")
 const prod = require("./Handlers/Prod_Mgmt");
 const { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } = require("constants");
+const cust_opr = require("./Handlers/Cust_Opr");
 const { Products } = require("./DB/schema");
 
 app.post("/register",reg.register)
@@ -84,47 +85,35 @@ app.post("/addProduct",prod.addProduct)
 app.get('/removeProduct',prod.removeProduct)
 app.post('/updateProduct',prod.updateProduct)
 
-app.get('/shops',(req,res)=>{
-    res.cookie('theme', 'blue')
-    return res.render("shops",{title:"Queue Management System",shop_name:shop[shop_id].name,shop_details:JSON.stringify(shop),layout:"user_layout"})
-})
-app.get('/:shop_name',async(req,res)=>{
-    try{
-        res.cookie('theme', shop[req.query.id].theme)
-        req.session.shop_id = req.query.id
-    } catch (error) {
-        return res.send("Page Refreshed")
-    }
-    await Products.find({sys_name:req.params['shop_name']},{id:0,createdAt:0,updatedAt:0,__v:0}).then(data=>{
-        return res.render("disp_prod",{title:req.params['shop_name'],shop_name:shop[req.query.id].name,prod_details:JSON.stringify(data),layout:"user_layout"})
-    }).catch(err=>{
-        console.log(err)
-    })
-})
-app.post("/checkout",(req,res)=>{
-    ids = req.body.Product_id.split('"').join("")
-    ids = ids.replace("{","").replace("}","").split(",")
-    id = {}
-    id_arr = []
-    ids.forEach(i=>{
-        a = i.split(":")
-        id[String(a[0])] = a[1]
-        id_arr.push(String(a[0]))
-    })
-    Products.find({"_id" : { "$in" : id_arr}}).then(data=>{
-        try{
-            return res.render("checkout",{title:'Checkout',shop_name:shop[req.session.shop_id].name,prod_details:JSON.stringify(data),layout:"user_layout"})
-        } catch (error) {
-            return res.send("Page Refreshed")
-        }
-    }).catch(err=>{
-        console.log(err)
-    })
-})
+app.get('/shops',cust_opr.disp_shops)
+app.get('/my_shop',cust_opr.disp_products)
+app.post("/checkout",cust_opr.checkout)
 
 app.post("/placeOrder",(req,res)=>{
     console.log(req.body)
     res.send("PLACE ORDER")
+})
+
+const Queue = require("./Handlers/Queue").Queue
+app.get("/queue",(req,res)=>{
+    var queue = new Queue();
+    console.log(queue.dequeue());
+    console.log(queue.isEmpty());
+    queue.enqueue(10);
+    queue.enqueue(20);
+    queue.enqueue(30);
+    queue.enqueue(40);
+    queue.enqueue(50);
+    queue.enqueue(60);
+    console.log(queue.front());
+    console.log(queue.front());
+    console.log(queue.dequeue());
+
+    console.log(queue.time)
+    queue.time += 5
+    console.log(queue.time)
+    console.log(queue.printQueue());
+
 })
 
 //Initialize Server 

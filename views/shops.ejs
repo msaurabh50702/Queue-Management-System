@@ -11,7 +11,7 @@
   for(i=1;i<prod.length;i++){
     let html = `
               <div class="col s6 m3">
-                <div class="card hoverable tooltipped" data-position="bottom" data-tooltip="Click to Explore Products" onclick="location.href = '/`+prod[i].name+`?id=`+i+`';">
+                <div class="card hoverable tooltipped" data-position="bottom" data-tooltip="Click to Explore Products" onclick="location.href = '/my_shop?shop_name=`+prod[i].name+`&id=`+i+`';">
                   <div class="card-image">
                     <img class="responsive-img" style="height:150px" src="`+prod[i].bg_img_url+`">
                   </div>
@@ -28,7 +28,7 @@
     `
     $('#shop_disp').append(html)
   }
-
+  localStorage.clear()
   $(document).ready(function(){
     $('.tooltipped').tooltip();
   });
