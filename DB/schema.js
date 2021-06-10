@@ -10,7 +10,9 @@ let Users = new mongoose.Schema({
     password: {type: String},
     accountType: {type: String},
     age: {type: Number},
-    accVerified:{type:Boolean}
+    accVerified:{type:Boolean},
+    ttl_queue: {type:Number},
+    queueID:{type:String}
 },{timestamps:true})
 
 let Prod = new mongoose.Schema({

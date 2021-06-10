@@ -1,4 +1,5 @@
 let shop = require("../details.json");
+let Products = require("../DB/schema").Products
 
 module.exports ={
     disp_shops:(req,res)=>{

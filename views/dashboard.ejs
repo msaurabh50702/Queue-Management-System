@@ -2,8 +2,9 @@
     <div class="row">
         <div class="col s12">
           <ul class="tabs blue darken-1">
-            <li class="tab col s3 m6" ><a class="white-text active" href="#MyProd" >My Products</a></li>
-            <li class="tab col s3 m6"><a class="white-text" href="#Queue">Queue</a></li>
+            <li class="tab col s4 m4" ><a class="white-text active" href="#MyProd" >My Products</a></li>
+            <li class="tab col s4 m4"><a class="white-text" href="#orders">My Orders</a></li>
+            <li class="tab col s4 m4"><a class="white-text" href="#Queue">Queue</a></li>
           </ul>
         </div>
         <div id="MyProd" class="col s12">
@@ -24,7 +25,56 @@
             </ul>
           </div>
         </div>
-        <div id="Queue" class="col s12">Test 2</div>
+        <div id="orders" class="col s12">Test 2</div>
+        <div id="Queue" class="col s12">
+          <div class="card blue darken-2"  style="max-width: 600px;margin: auto;margin-top: 50px;" >
+            <!-- Card Header -->
+            <div class="card-content white-text">
+                <div class="row">
+                    <div class="col s12 m12">
+                        <center><div style="font-weight: bold;font-size: 15pt;">Add Queue</div></center>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Queue -->
+            <div id="login">
+              <form class="col s12 z-depth-3" method="POST" action="/addQueue" id="loginform" >
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="owner_name" type="text" name="owner_name" class="validate" required>
+                    <label for="owner_name" >Owner Name</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="sys_name" type="text" name="sys_name" value="<%- shop_details.name %> - <%- Qcnt %>" readonly class="validate" required>
+                    <label for="sys_name"><span class="sys">Queue</span> Name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="email" type="email" name="email" class="validate" required>
+                    <label for="email">Email</label>
+                  </div>
+                  <div class="input-field col s6">
+                      <input id="mobile" type="number" name="mobile" class="validate" required>
+                      <label for="mobile">Mobile</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="input-field col s6">
+                    <input id="password" type="password" name="password" class="validate" required>
+                    <label for="password">Password</label>
+                  </div>
+                  <div class="input-field col s6">
+                      <input id="cpassword" type="password" name="cpassword" class="validate" required>
+                      <label for="cpassword">Confirm Password</label>
+                  </div>
+                </div>
+                <input type="hidden" class="sys_type" value="Queue" name="sys_type">
+                <button type="submit" class="waves-effect waves-light btn-small col s8 m8 l8 blue darken-2 offset-s2 offset-m2 offset-l2">Register</button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
 </div>
 

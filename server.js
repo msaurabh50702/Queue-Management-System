@@ -59,7 +59,7 @@ app.get("/dashboard",async(req,res)=>{
         });
         res.cookie('theme', shop[shop_id].theme)
         await Products.find({sys_name:req.session.sys_name},{id:0,createdAt:0,updatedAt:0,__v:0}).then(data=>{
-            res.render("dashboard",{title:"Dashboard",shop_details:shop[shop_id],products:JSON.stringify(data)})
+            res.render("dashboard",{title:"Dashboard",shop_details:shop[shop_id],products:JSON.stringify(data),Qcnt:req.session.ttl_queue})
         }).catch(err=>{
             console.log(err)
         })
@@ -93,6 +93,8 @@ app.post("/placeOrder",(req,res)=>{
     console.log(req.body)
     res.send("PLACE ORDER")
 })
+
+app.post("/addQueue",reg.addQueue)
 
 const Queue = require("./Handlers/Queue").Queue
 app.get("/queue",(req,res)=>{
