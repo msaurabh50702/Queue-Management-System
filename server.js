@@ -129,8 +129,9 @@ app.post("/placeOrder",(req,res)=>{
     })
 })
 
-app.post("/completeOrder",(req,res)=>{
-    console.log("Completed")
+app.get("/completeOrder/:id",(req,res)=>{
+    console.log(req.params.id)
+    res.json("ok")
 })
 
 app.get("/orderDetails",(req,res)=>{
@@ -158,7 +159,6 @@ app.get("/getProdDtl/:id",(req,res)=>{
             pro.forEach((element,ind) => {
                 res_arr.push({item:element,qty:di[element._id]})
             });
-            console.log(pro)
             res.json(res_arr)
         })
     })

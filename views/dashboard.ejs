@@ -188,7 +188,7 @@
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      <a class="modal-close waves-effect waves-green btn-flat">Close</a>
     </div>
 </div>  
 
@@ -275,13 +275,15 @@
   function getOrders(){
     $.get("/orderDetails", function(data, status){
       if(status == "success"){
+        console.log(data)
+        let html = ""
         for(let i=0;i<data.length;i++){
           let pi = data[i]._id;
-          let html = `
-              <div class="col s12 m4" onclick="getProducts('`+pi+`')" title="Click to get Details">
+          html += `
+              <div class="col s12 m4" id="`+pi+`" title="Click to get Details">
                   <div class="card-panel grey lighten-5 z-depth-1 tooltipped" data-position="bottom" data-tooltip="Click to Explore Products">
                   <div class="row valign-wrapper">
-                      <div class="col s6">
+                      <div class="col s6" onclick="getProducts('`+pi+`')" style="cursor: pointer;">
                         <span class="black-text">
                             <strong>`+data[i].cust_name+`</strong>
                             <p>`+data[i].cust_email+`<br>
@@ -289,7 +291,7 @@
                         </span>
                       </div>
                       <div class="col s6">
-                        <a class="waves-effect waves-light btn">Mark as Delivered</a>
+                        <a class="waves-effect waves-light btn" onclick="delOrder('`+pi+`')">Mark as Delivered</a>
                       </div>
                   </div>
                   </div>
@@ -325,5 +327,12 @@
       console.log(data)
       $("#product_list").html(html)
     })
+  }
+
+  function delOrder(id){
+    $.get("/completeOrder/"+id, function(data, status){
+      console.log(data)
+    })
+    $("#"+id).hide()
   }
 </script>
