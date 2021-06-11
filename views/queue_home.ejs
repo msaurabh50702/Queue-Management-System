@@ -1,0 +1,87 @@
+<div id="orders" class="col s12">
+    <!-- MyOrders -->
+
+</div>
+<!-- ProductDetails Modal -->
+<!-- Modal Structure -->
+<div id="pmodal" class="modal bottom-sheet">
+    <div class="modal-content">
+      <h4>Product Details</h4>
+      <div id="product_list" class="row">
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+</div>  
+
+<div class="fixed-action-btn">
+    <a class="btn-floating btn-large waves-effect waves-light red" onclick="getOrders()"><i class="material-icons">cached</i></a>
+</div>
+
+<script>
+    function getOrders(){
+    $.get("/orderDetails", function(data, status){
+      if(status == "success"){
+        console.log(data)
+        let html = ""
+        for(let i=0;i<data.length;i++){
+          let pi = data[i]._id;
+          html += `
+              <div class="col s12 m4" id="`+pi+`" title="Click to get Details">
+                  <div class="card-panel grey lighten-5 z-depth-1 tooltipped" data-position="bottom" data-tooltip="Click to Explore Products">
+                  <div class="row valign-wrapper">
+                      <div class="col s6" onclick="getProducts('`+pi+`')" style="cursor: pointer;">
+                        <span class="black-text">
+                            <strong>`+data[i].cust_name+`</strong>
+                            <p>`+data[i].cust_email+`<br>
+                               <span style="color:green">Rs. `+data[i].amount+`</span></p>
+                        </span>
+                      </div>
+                      <div class="col s6">
+                        <a class="waves-effect waves-light btn" onclick="delOrder('`+pi+`')">Mark as Delivered</a>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+          `
+          $('#orders').html(html)
+        }
+      } 
+    });
+  }
+  function getProducts(pi){
+    $("#pmodal").modal('open')
+    $.get("/getProdDtl/"+pi, function(data, status){
+      html = ""
+      data.forEach(element => {
+        html += `<div class="col s12 m4">
+                  <div class="card-panel grey lighten-5 z-depth-1">
+                  <div class="row valign-wrapper">
+                    <div class="col s4">
+                        <img src="`+element.item.product_img+`" alt="Image" class="circle responsive-img" style="height:100px;width:100px">
+                    </div>
+                      <div class="col s6">
+                        <div class="black-text">
+                            <strong">`+element.item.product_name+`</strong>
+                            <p>Quantity : `+element.qty+`<br>
+                               <span style="color:green">Rs. `+Number(element.item.product_price)*Number(element.qty)+`</span></p>
+                        </div>
+                      </div>
+                  </div>
+                  </div>
+              </div>`
+      });
+      console.log(data)
+      $("#product_list").html(html)
+    })
+  }
+  getOrders()
+  function delOrder(id){
+    $.get("/completeOrder/"+id, function(data, status){
+      console.log(data)
+    })
+    $("#"+id).hide()
+  }
+</script>

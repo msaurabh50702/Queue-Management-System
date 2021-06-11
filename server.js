@@ -130,13 +130,17 @@ app.post("/placeOrder",(req,res)=>{
 })
 
 app.get("/completeOrder/:id",(req,res)=>{
-    console.log(req.params.id)
-    res.json("ok")
+    if(req.session.userId)
+        Order.findOneAndUpdate({_id:req.params.id,order_status:"Pending"},{order_status:"Completed"}).then(data=>{
+            return res.json(data)
+        })
+    else
+        res.send("Invalid Operation")
 })
 
 app.get("/orderDetails",(req,res)=>{
     if(req.session.userId)
-        Order.find({queue_id:req.session.userId}).then(data=>{
+        Order.find({queue_id:req.session.userId,order_status:"Pending"}).then(data=>{
             res.json(data)
         })
     else

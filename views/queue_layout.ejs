@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%- title %>
+    </title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Javascript to handle Cookies  -->
+    <script src="js/cookies.js" type="text/javascript"></script>
+
+</head>
+
+<body class="blue lighten-5" style="padding:2px;">
+    <nav>
+        <div class="nav-wrapper blue">
+            <a href="#" class="brand-logo" style="font-size: 150%;">
+                <%- shop_name %>
+            </a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="/logout"><i class="material-icons right">view_module</i>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- Horizontal Navigation Bar End-->
+
+    <%- body %>
+        <!--JavaScript at end of body for optimized loading-->
+        <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+        
+        <!-- Materialize Components Initialization with Javascript-->
+        <script>
+            $(document).ready(function () {
+                $('.sidenav').sidenav();
+                $('.modal').modal();
+            });
+        </script>
+        
+        <!-- QR Code with Google API -->
+        <script>
+            let finalURL = 'https://chart.googleapis.com/chart?cht=qr&chl=http://' +
+                location.hostname +
+                ':8080/shops&chs=160x160&chld=L|0'
+            let uri = "http://" + location.hostname + ":8080/shops"
+            $('#qrcode').attr('src', finalURL);
+            $('#uri1').attr('src', uri).html(uri);
+        </script>
+
+        <!-- Javascript to Change Materialize theme [class form cookies] -->
+        <script>
+            function change_theme(old,theme){
+                console.log(theme)
+                let tags = document.querySelectorAll("."+old);
+                for (var i = 0; i < tags.length; i++) {
+                    (tags[i].classList).replace(old, theme)
+                }
+                let tags_txt = document.querySelectorAll("."+old+"-text");
+                for (var i = 0; i < tags_txt.length; i++) {
+                    (tags_txt[i].classList).replace(old+'-text', theme+"-text")
+                }
+            }
+            $(document).ready(function () {
+                change_theme("blue",readCookie("theme"))
+            });
+        </script>
+        <%if (messages.error) { %>
+            <script>
+              $(document).ready(function(){
+                M.toast({html: '<Strong><%= messages.error %></strong>',classes:"red"})
+                  console.log("OK")
+              })
+            </script>
+        <% } %>
+        <%if (messages.success) { %>
+          <script>
+            $(document).ready(function(){
+              M.toast({html: '<Strong><%= messages.success %></strong>',classes:"green"})
+                console.log("OK")
+            })
+          </script>
+        <% } %>
+</body>
+
+</html>

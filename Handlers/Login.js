@@ -2,6 +2,7 @@ const User = require("../DB/schema").Users
 const bcrypt = require('bcrypt')
 const Queue = require("../Handlers/Queue").Queue
 let Queue_dict = []
+let shop = require("../details.json")
 
 module.exports ={
     login:async(req,res) =>{
@@ -30,7 +31,14 @@ module.exports ={
                         req.flash('success', "Welcome, "+user.owner_name)
                         return res.redirect('dashboard')
                     }else{
-                        res.end("QUEUE")
+                        let shop_id = 0;
+                        shop.forEach((element,ind) => {
+                            if(element.name == String(req.session.sys_name).split(" Queue")[0]){
+                                shop_id = ind;
+                            }
+                        });
+                        res.cookie('theme', shop[shop_id].theme)
+                        res.render("queue_home",{layout:"queue_layout",title:"Queue",shop_name:user.sys_name})
                     }
                 }
                 else{
