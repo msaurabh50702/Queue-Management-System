@@ -124,6 +124,7 @@ app.post("/placeOrder",(req,res)=>{
     })
     order.save().then(result=>{
         Queue_dict[min_ind].enqueue(result,result.order_time)
+        console.log("Queue Status ")
         console.log(Queue_dict)
         return res.send("<p style='color:red'>Order Placed :- "+result._id+"</p>")
     })
@@ -132,6 +133,14 @@ app.post("/placeOrder",(req,res)=>{
 app.get("/completeOrder/:id",(req,res)=>{
     if(req.session.userId)
         Order.findOneAndUpdate({_id:req.params.id,order_status:"Pending"},{order_status:"Completed"}).then(data=>{
+            let id = null;
+            Queue_dict.forEach((obj,ind)=>{
+                console.log(obj.qid+" "+data.queue_id)
+                if(obj.qid == data.queue_id)
+                    id = ind
+            })
+            Queue_dict[id].dequeue(Number(data.order_time))
+            console.log(Queue_dict)
             return res.json(data)
         })
     else

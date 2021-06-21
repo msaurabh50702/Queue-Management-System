@@ -1,1 +1,26 @@
-[{"name":"QMS","Description":"Shop Description","bg_img_url":"https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500","theme":"blue","tokens":"123"},{"name":"Sai Kirana And Gen. Store","owner_name":"Saurabh Mahajan","sys_type":"Shop","email":"msaurabh50702@gmail.com","mobile":"9158342110","bg_img_url":"https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500","theme":"deep-orange"},{"name":"Sai Kirana And Gen. Store Queue - 1","owner_name":"Pankaj Warkar","sys_type":"Queue","email":"pankaj@gmail.com","mobile":"1548726594","bg_img_url":"https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"}]
+[
+    {
+        "name": "QMS",
+        "Description": "Shop Description",
+        "bg_img_url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "theme": "blue",
+        "tokens": "123"
+    },
+    {
+        "name": "Sai Kirana And Gen. Store",
+        "owner_name": "Saurabh Mahajan",
+        "sys_type": "Shop",
+        "email": "msaurabh50702@gmail.com",
+        "mobile": "9158342110",
+        "bg_img_url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "theme": "deep-orange"
+    },
+    {
+        "name": "Sai Kirana And Gen. Store Queue - 1",
+        "owner_name": "Pankaj Warkar",
+        "sys_type": "Queue",
+        "email": "pankaj@gmail.com",
+        "mobile": "1548726594",
+        "bg_img_url": "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    }
+]

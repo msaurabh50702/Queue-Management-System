@@ -10,9 +10,10 @@ class Queue
         this.items.push(element);
         this.time = this.time + Number(t);
     }
-    dequeue(){
+    dequeue(t){
         if(this.isEmpty())
             return "Underflow";
+        this.time = this.time - Number(t)
         return this.items.shift();
     }
     getTime(){
