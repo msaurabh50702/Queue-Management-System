@@ -6,6 +6,7 @@ const expressLayouts = require('express-ejs-layouts');
 const flash = require('express-flash');
 const session = require('express-session');
 const fs = require('fs');
+const mail = require('nodemailer');
 const Order = require("./DB/schema").Orders
 
 let shop = require("./details.json")
@@ -40,6 +41,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cookieParser())
+
+const sender = mail.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'msaurabh50703@gmail.com',
+      pass: process.env.PWD
+    }
+  });
 
 // Route
 
@@ -124,22 +133,36 @@ app.post("/placeOrder",(req,res)=>{
     })
     order.save().then(result=>{
         Queue_dict[min_ind].enqueue(result,result.order_time)
-        console.log("Queue Status ")
+        console.log("Enquque")
         console.log(Queue_dict)
         return res.send("<p style='color:red'>Order Placed :- "+result._id+"</p>")
     })
 })
 
+
+const temp = require("./Handlers/mail_temp").getTemp
 app.get("/completeOrder/:id",(req,res)=>{
     if(req.session.userId)
         Order.findOneAndUpdate({_id:req.params.id,order_status:"Pending"},{order_status:"Completed"}).then(data=>{
-            let id = null;
             Queue_dict.forEach((obj,ind)=>{
-                console.log(obj.qid+" "+data.queue_id)
-                if(obj.qid == data.queue_id)
-                    id = ind
+                if(obj.qid == data.queue_id){
+                    Queue_dict[ind].dequeue(Number(data.order_time))
+                     var mailOptions = {
+                        from: 'msaurabh50703@gmail.com',
+                        to: data.cust_email,
+                        subject: 'Order Completed',
+                        html: temp(data.shop_name,data._id,data.cust_name,data.amount)
+                      };
+                      sender.sendMail(mailOptions, function(error, info){
+                        if (error) {
+                          console.log(error);
+                        } else {
+                          console.log('Email sent: ' + info.response);
+                        }
+                      });
+                }
             })
-            Queue_dict[id].dequeue(Number(data.order_time))
+            console.log("Dequque")
             console.log(Queue_dict)
             return res.json(data)
         })
@@ -197,6 +220,23 @@ app.get("/queue",(req,res)=>{
     console.log(queue.time)
     console.log(queue.printQueue());
 
+})
+
+app.get('/send',(req,res)=>{
+    var mailOptions = {
+        from: 'msaurabh50703@gmail.com',
+        to: 'msaurabh50702@gmail.com',
+        subject: 'Order Completed',
+        html: temp("shop_name","oid","Saurabh",200)
+      };
+      
+      sender.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
 })
 
 
