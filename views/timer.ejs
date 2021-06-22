@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+<style>
+    body{
+        text-align: center;
+        background: #00ECB9;
+        font-family: sans-serif;
+        font-weight: 100;
+    }
+    h1{
+        color: #396;
+        font-weight: 100;
+        font-size: 40px;
+        margin: 40px 0px 20px;
+    }
+    #clockdiv{
+        font-family: sans-serif;
+        color: #fff;
+        display: inline-block;
+        font-weight: 100;
+        text-align: center;
+        font-size: 30px;
+    }
+    #clockdiv > div{
+        padding: 10px;
+        border-radius: 3px;
+        background: #00BF96;
+        display: inline-block;
+    }
+    #clockdiv div > span{
+        padding: 15px;
+        border-radius: 3px;
+        background: #00816A;
+        display: inline-block;
+    }
+    smalltext{
+        padding-top: 5px;
+        font-size: 16px;
+    }
+    #ord_dtl > div{
+        color:white;
+        padding: 10px;
+        border-radius: 3px;
+        background: #00BF96;
+        display: inline-block;
+    }
+</style>
+</head>
+<body>
+<h1>Please Wait</h1>
+<p style="color: white;">Your order is Getting Packed</p>
+<div style="display: block;visibility: hidden;">
+	<span class="days" id="day"></span>
+</div>
+<div id="clockdiv">
+<div>
+	<span class="hours" id="hour"></span>
+	<div class="smalltext">Hours</div>
+</div>
+<div>
+	<span class="minutes" id="minute"></span>
+	<div class="smalltext">Minutes</div>
+</div>
+<div>
+	<span class="seconds" id="second"></span>
+	<div class="smalltext">Seconds</div>
+</div>
+</div>
+<br>
+<div id="ord_dtl" style="margin-top:20px;">
+<div>
+	<div style="width: 400px;">
+        <table style="text-align: left;">
+            <tr>
+                <td style="width: 150px;">Order ID : </td>
+                <td><%= dtl._id %></td>
+            </tr>
+            <tr>
+                <td style="width: 150px;">Shop Name : </td>
+                <td><%= dtl.shop_name %></td>
+            </tr>
+            <tr>
+                <td style="width: 150px;">Name : </td>
+                <td><%= dtl.cust_name %></td>
+            </tr>
+            <tr>
+                <td style="width: 150px;">Amount : </td>
+                <td>Rs.<%= dtl.amount %>/-</td>
+            </tr>
+        </table>
+    </div>
+</div>
+</div>
+
+<p id="demo" style="color: red;"></p>
+
+<script>
+var deadline = new Date();
+deadline.setSeconds(deadline.getSeconds() + Number("<%= time %>") + 60)
+deadline = deadline.getTime()
+var x = setInterval(function() {
+
+var now = new Date().getTime();
+var t = deadline - now;
+var days = Math.floor(t / (1000 * 60 * 60 * 24));
+var hours = Math.floor((t%(1000 * 60 * 60 * 24))/(1000 * 60 * 60));
+var minutes = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+var seconds = Math.floor((t % (1000 * 60)) / 1000);
+document.getElementById("day").innerHTML =days ;
+document.getElementById("hour").innerHTML =hours;
+document.getElementById("minute").innerHTML = minutes;
+document.getElementById("second").innerHTML =seconds;
+if (t < 0) {
+		clearInterval(x);
+		document.getElementById("demo").innerHTML = "Your Order is Packed <hr> We have send you email for more details";
+		document.getElementById("day").innerHTML ='0';
+		document.getElementById("hour").innerHTML ='0';
+		document.getElementById("minute").innerHTML ='0' ;
+		document.getElementById("second").innerHTML = '0'; }
+}, 1000);
+</script>
+
+<script>
+  const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-end',
+  showConfirmButton: false,
+  timer: 10000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener('mouseenter', Swal.stopTimer)
+    toast.addEventListener('mouseleave', Swal.resumeTimer)
+  }
+})
+
+Toast.fire({
+  icon: 'success',
+  title: 'Your order Placed <br> We send you Email when it will packed'
+})
+</script>
+</body>
+</html>

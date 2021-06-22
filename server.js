@@ -127,15 +127,17 @@ app.post("/placeOrder",(req,res)=>{
         order_products:req.body.product_ids,
         amount:Number(req.body.amount),
         order_time:Number(req.body.order_time),
-        shop_name:req.session.sys_name,
+        shop_name:shop[req.session.shop_id].name,
         order_status:"Pending",
         queue_id:Queue_dict[min_ind].qid
     })
     order.save().then(result=>{
+        console.log(result)
         Queue_dict[min_ind].enqueue(result,result.order_time)
-        console.log("Enquque")
+        console.log("EnQueue")
         console.log(Queue_dict)
-        return res.send("<p style='color:red'>Order Placed :- "+result._id+"</p>")
+        return res.render("timer",{title:"Timer",dtl:result,time:Queue_dict[min_ind].getTime(),layout:false})
+        //return res.send("<p style='color:red'>Order Placed :- "+result._id+"</p>")
     })
 })
 
@@ -162,7 +164,7 @@ app.get("/completeOrder/:id",(req,res)=>{
                       });
                 }
             })
-            console.log("Dequque")
+            console.log("DeQueue")
             console.log(Queue_dict)
             return res.json(data)
         })
@@ -198,6 +200,10 @@ app.get("/getProdDtl/:id",(req,res)=>{
             res.json(res_arr)
         })
     })
+})
+
+app.get("/tim",(req,res)=>{
+    res.render("timer",{title:"Timer",time:30,layout:false})
 })
 
 app.get("/queue",(req,res)=>{
